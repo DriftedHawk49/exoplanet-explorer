@@ -35,6 +35,14 @@ Instructions:
 
     Your code goes here!
      */
+     return fetch(url,{
+      method: 'get'
+     }).then(function(){
+      console.log("Successful Fetch");
+     }).catch(function(){
+      console.log("Failed Fetch");
+     });
+
   }
 
   /**
@@ -48,6 +56,9 @@ Instructions:
 
     Your code goes here!
      */
+     return get(url).then(function(){
+      return response.json();
+     })
   }
 
   window.addEventListener('WebComponentsReady', function() {
@@ -58,6 +69,13 @@ Instructions:
 
     Your code goes here too!
      */
-    // getJSON('../data/earth-like-results.json')
+    getJSON('../data/earth-like-results.json').then(function(response){
+      console.log("WE did it");
+      addSearchHeader(response.query);
+    }).catch(function(error){
+      console.log("Everything Failed");
+      addSearchHeader(Error("unknown"));
+      console.log(error);
+    })
   });
 })(document);
