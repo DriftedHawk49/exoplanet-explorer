@@ -33,6 +33,7 @@ Instructions:
       pT[d] = data[d];
     }
     home.appendChild(pT);
+    console.log(pT);
   }
 
   /**
@@ -59,13 +60,18 @@ Instructions:
 
   window.addEventListener('WebComponentsReady', function() {
     home = document.querySelector('section[data-route="home"]');
-    /*
-    Refactor this code!
-     */
+    var sequence = Promise.resolve();
+
     getJSON('../data/earth-like-results.json')
     .then(function(response) {
       response.results.forEach(function(url) {
-        getJSON(url).then(createPlanetThumb);
+        sequence = sequence.then(function(){
+        return getJSON(url);
+      }).then(createPlanetThumb)
+        .catch(function(e){
+          console.log(e);
+        });
+
       });
     });
   });
