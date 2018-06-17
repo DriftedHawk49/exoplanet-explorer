@@ -60,7 +60,9 @@ Instructions:
      */
 
     getJSON('../data/earth-like-results.json').then(function(response){
-      // To enter tHsi
+     response.results.map(function(val){
+      getJSON(val).then(createPlanetThumb);
+     })
     });
   });
 })(document);
